@@ -1,23 +1,12 @@
 import mongoose, { Document, Schema } from "mongoose";
-
-interface IUser extends Document {
-  name: string;  
-  username: string;
-  password: string;
-  profilePictures: string[];
-  contacts: mongoose.Schema.Types.ObjectId[];
-  chats: mongoose.Schema.Types.ObjectId[];
-  groups: mongoose.Schema.Types.ObjectId[];
-  channels: mongoose.Schema.Types.ObjectId[];
-  isOnline: boolean;
-  lastSeen: Date;
-}
+import IUser from "../@types/IUser";
 
 const UserSchema = new Schema<IUser>(
   {
-    name: { type: String, required: true,minlength:2 },
-    username: { type: String, required: true,unique: true },
-    password: { type: String, required: true, minlength: 8,select:false },
+    name: { type: String, minlength: 2 },
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true, minlength: 8 },
     profilePictures: [{ type: String }], // آرایه‌ای از آدرس عکس‌های پروفایل
     contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // لیست مخاطبین
     chats: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chat" }], // چت‌های مرتبط
